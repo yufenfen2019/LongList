@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LongListRender</title>
+    </head>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript"></script> -->
+
+    <style>
+        .tab {
+            background-color: #1c2435;
+            color: #fff;
+        }
+    .tableHead, .tableContent {
+            width: 100%;
+            height: 32px;
+            border: 1px solid #292828;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        li {
+            list-style-type:none;
+            height: 32px;
+            line-height: 32px;
+            font-size: 16px;
+        }
+    </style>
+
+    <body>
+        <div class="tab">
+            <div id="" class="tableHead">
+                <div>序号</div>
+                <div>名称</div>
+                <div>代码</div>
+            </div>
+            <div id="list">
+            </div>
+        </div>
+
+        <script>
+            console.time()
+            var tab = document.getElementById("tab")
+            console.log('tab', tab);
+            // var cent = document.getElementById("tab");
+            var cent = document.getElementById('list')
+            function insert(curTotal, curIndex) {
+            if (curTotal <= 0) return
+            window.requestAnimationFrame(() => {
+                let frame = document.createDocumentFragment()
+                for (let i = 0;  i < 2000; i++) {
+                let li = document.createElement('li')
+                li.innerHTML = curIndex + i + 1
+                li.innerHTML = "<div id='' class='tableContent'>" +
+                            "<div id=''> " + i + "</div>" +
+                            "<div id=''> " + Math.random().toString(36).slice(2,11) + "</div>" +
+                            "<div id=''>" + Math.floor(Math.random()*100000) + "</div></div>"
+                frame.appendChild(li)
+                }
+                cent.appendChild(frame)
+                insert(curTotal - 2000, curIndex + 2000)
+            })
+            }
+            insert(5000, 0)
+            console.timeEnd()
+        </script>
+
+        <script type="text/javascript">
+            document.getElementById("list").onmouseover = function (e) { // 支持鼠标hover选中
+                e = e || window.event;
+                var target = e.srcElement || e.target; //当前的dom元素
+                target.style.background = "#1890ff"  
+            }
+            document.getElementById("list").onmouseout = function (e) {
+                e = e || window.event;
+                var target = e.srcElement || e.target; 
+                target.style.background = "#1c2435"  
+            }
+            document.getElementById("list").onclick = function (e) { // 支持鼠标点击
+                e = e || window.event;
+                var target = e.srcElement || e.target; 
+                target.style.background = "green"
+                // console.log(target.innerHTML + ' ' + 'clicked')
+            }
+            document.getElementById("list").onkeydown = function (e) { // 支持键盘上下按键改变选中条目
+                e = e || window.event;
+                var target = e.srcElement || e.target;
+                target.style.background = "#1c2435"
+            }
+        </script>
+    </body>
+
+</html>
